@@ -81,10 +81,12 @@ const createBrowserHistory = (props = {}) => {
 
     history.length = globalHistory.length
 
-    transitionManager.notifyListeners(
-      history.location,
-      history.action
-    )
+    if(!forceNextPop) {
+      transitionManager.notifyListeners(
+        history.location,
+        history.action
+      )
+    }
   }
 
   const handlePopState = (event) => {
@@ -103,8 +105,8 @@ const createBrowserHistory = (props = {}) => {
 
   const handlePop = (location) => {
     if (forceNextPop) {
-      forceNextPop = false
       setState()
+      forceNextPop = false
     } else {
       const action = 'POP'
 
